@@ -588,7 +588,7 @@ const bool Z_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the logic
 
 // default settings
 
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {80, 80, 4000, 500}  // 280 pignon emaritimmodels
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {107, 107, 4020, 500}  // 280 pignon emaritimmodels
 #define DEFAULT_MAX_FEEDRATE          {100, 100, 10, 25}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {1000, 1000, 20, 10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 
