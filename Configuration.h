@@ -65,7 +65,7 @@ Here are some standard links for getting your machine calibrated:
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
   //#define MOTHERBOARD BOARD_MEGATRONICS_3
-    #define MOTHERBOARD BOARD_RAMPS_13_EEF
+    #define MOTHERBOARD BOARD_RAMPS_13_EFB
 
 #endif
 
@@ -147,7 +147,7 @@ Here are some standard links for getting your machine calibrated:
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
-#define TEMP_SENSOR_BED 0
+#define TEMP_SENSOR_BED 111
 
 // This makes temp sensor 1 a redundant sensor for sensor 0. If the temperatures difference between these sensors is to high the print will be aborted.
 //#define TEMP_SENSOR_1_AS_REDUNDANT
@@ -588,7 +588,7 @@ const bool Z_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the logic
 
 // default settings
 
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {107, 107, 4020, 500}  // 280 pignon emaritimmodels
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {100, 100, 4020, 500}  // 280 pignon emaritimmodels
 #define DEFAULT_MAX_FEEDRATE          {100, 100, 10, 25}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {1000, 1000, 20, 10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 
