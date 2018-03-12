@@ -1,0 +1,40 @@
+#!/bin/bash
+bin/slic3r\
+  --extrusion-multiplier 8\
+  --print-center 111,50\
+  --infill-overlap 50%\
+  --nozzle-diameter 0.3\
+  --z-offset 0.2\
+  --skirts 0\
+  --perimeter-extrusion-width 200%\
+  --use-firmware-retraction\
+  --gcode-comments\
+  --retract-length 0\
+  --filament-diameter 1.75\
+  --temperature 20\
+  --first-layer-temperature 20\
+  --bed-temperature 20\
+  --first-layer-bed-temperature 20\
+  --travel-speed 130\
+  --perimeter-speed 15\
+  --small-perimeter-speed 10\
+  --external-perimeter-speed 100%\
+  --infill-speed 15\
+  --solid-infill-speed 15\
+  --top-solid-infill-speed 10\
+  --bridge-speed 60\
+  --gap-fill-speed 20\
+  --first-layer-speed 100%\
+  --layer-height 0.25\
+  --first-layer-height 0.25\
+  --infill-every-layers 1\
+  --solid-infill-every-layers 0\
+  --perimeters 3\
+  --solid-layers 3\
+  --fill-density 50%\
+  --fill-pattern rectilinear\
+  --external-fill-pattern rectilinear\
+  --avoid-crossing-perimeters\
+  --thin-walls\
+  --fill-angle 0\
+  $1
