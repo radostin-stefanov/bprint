@@ -65,7 +65,7 @@ Here are some standard links for getting your machine calibrated:
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
   //#define MOTHERBOARD BOARD_MEGATRONICS_3
-    #define MOTHERBOARD BOARD_RAMPS_13_EEF
+    #define MOTHERBOARD BOARD_RAMPS_13_EEB //Ext1,Ext2,Bed
 
 #endif
 
@@ -147,7 +147,7 @@ Here are some standard links for getting your machine calibrated:
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
-#define TEMP_SENSOR_BED 0
+#define TEMP_SENSOR_BED 111
 
 // This makes temp sensor 1 a redundant sensor for sensor 0. If the temperatures difference between these sensors is to high the print will be aborted.
 //#define TEMP_SENSOR_1_AS_REDUNDANT
