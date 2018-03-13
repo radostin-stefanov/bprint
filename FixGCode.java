@@ -60,6 +60,7 @@ public class FixGCode {
 
     ArrayList<String> arr = new ArrayList();
     BufferedReader inp = new BufferedReader(new FileReader(f));
+    int layerCount = 0;
     
     while (true) {
       String line = inp.readLine();
@@ -75,16 +76,27 @@ public class FixGCode {
       }
 
       // Lift Z if we go to the next layer.
-      if (delay > 0 && line.indexOf("move to next layer") >= 0) {
-        String num = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
-        int layerNo = Integer.parseInt(num);
-        if (layerNo >= 2) {
-          String trail = line.substring(line.indexOf("Z") + 1);
-          String currentZ = trail.substring(0, trail.indexOf(" "));
-          double z = Double.parseDouble(currentZ);
-          arr.add(line.substring(0, line.indexOf("Z") + 1) + (z + lift) + trail.substring(trail.indexOf(" ")));
-          arr.add("G4 S" + delay);
-        }
+      if (delay > 0 && line.indexOf("G1 Z") >= 0) {
+          layerCount++;
+          if (layerCount > 2) {
+
+			  // Replace Fxxxx with F80
+			  if (line.indexOf(" F") >= 0) {
+				String begin = line.substring(0, line.indexOf(" F") + 2);
+				String end = line.substring(line.indexOf(" F") + 2);
+				if (end.indexOf(" ") >= 0) 
+				  end = end.substring(end.indexOf(" ") + 1);
+				else
+				  end = "";
+				line = begin + "80 " + end;
+			  }
+
+			  String trail = line.substring(line.indexOf("Z") + 1);
+			  String currentZ = trail.substring(0, trail.indexOf(" "));
+			  double z = Double.parseDouble(currentZ);
+			  arr.add(line.substring(0, line.indexOf("Z") + 1) + (z + lift) + trail.substring(trail.indexOf(" ")));
+			  arr.add("G4 S" + delay);
+		  }
       }
 
       // Add current line.
