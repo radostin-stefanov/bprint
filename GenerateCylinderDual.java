@@ -23,8 +23,8 @@ public class GenerateCylinderDual {
 		double centerY = 67; // 72
 		double firstExtruderOffsetX = -19; // mm
 		double firstExtruderOffsetY = 0; // mm
-		double secondExtruderOffsetX = 11; // mm
-		double secondExtruderOffsetY = 0; // mm
+		double secondExtruderOffsetX = 13; // mm
+		double secondExtruderOffsetY = 3; // mm
 		double F = 300; // feedrate in mm/min
 		double Zspeed = 120; // mm/min
 		double nonPrintingMovementSpeed = 3000; // mms/min
