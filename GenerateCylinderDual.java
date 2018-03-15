@@ -1,23 +1,41 @@
+/**
+ *
+ * A simple tool for generating GCode to print a cylinder with dual extrusion. Use the terminal.
+ *
+ * Compile with:
+ *   javac GenerateCylinderDual.java
+ *
+ * Run with:
+ *   java GenerateCylinderDual > cylinder.gcode
+ *
+ * Load the result file (cylinder.gcode) in PrintRun.
+ *
+ * You change various parameters like the radius, height, position and print speed directly in the code,
+ * then recompile and generate the cylinder again.
+ */
 public class GenerateCylinderDual {
 
 	public static void main(String[] args) throws Exception {
 		double R = 10;
 		double H = 20;
 		double step = 0.5;
-		double centerX = 185.0 / 2.0;
-		double centerY = 120.0 / 2.0;
-		double extruderOffsetX = 80; // mm
-		double extruderOffsetY = 0; // mm
-		double F = 300; // mm/s -- feedrate
-		double Zspeed = 300; // mm/s
-		double nonPrintingMovementSpeed = 900; // mms/s
+		double centerX = 62; // 92
+		double centerY = 67; // 72
+		double firstExtruderOffsetX = -19; // mm
+		double firstExtruderOffsetY = 0; // mm
+		double secondExtruderOffsetX = 11; // mm
+		double secondExtruderOffsetY = 0; // mm
+		double F = 300; // feedrate in mm/min
+		double Zspeed = 120; // mm/min
+		double nonPrintingMovementSpeed = 3000; // mms/min
+		int cylinderSteps = 30;
 
 		p("G21 ; set units to millimeters");
 		p("G90 ; use absolute coordinates");
 		p("M82 ; use absolute distances for extrusion");
 		p("G92 E0 ; reset extrusion distance");
-		p("G1 Z20 F" + Zspeed + " ; lift Z");
-		p("G28 ; home all axes");
+//		p("G1 Z20 F" + Zspeed + " ; lift Z");
+//		p("G28 ; home all axes");
 		p("G1 Z20 F" + Zspeed + " ; lift Z");
 		p("");
 
@@ -25,9 +43,16 @@ public class GenerateCylinderDual {
 			for (int t = 0; t < 2; t++) {
 				boolean ZPositionSet = false;
 				p("T" + t);
-				for (int i = 0; i < 30; i++) {
-					double x = R * Math.cos(i * Math.PI * 2 / 15) + centerX + (t == 1 ? extruderOffsetX : 0);
-					double y = R * Math.sin(i * Math.PI * 2 / 15) + centerY + (t == 1 ? extruderOffsetY : 0);
+				for (int i = 0; i <= cylinderSteps; i++) {
+					double angle = i * Math.PI * 2 / cylinderSteps;
+					double x = R * Math.cos(angle) + centerX + (t == 0 ? firstExtruderOffsetX : secondExtruderOffsetX);
+					double y = R * Math.sin(angle) + centerY + (t == 0 ? firstExtruderOffsetY : secondExtruderOffsetY);
+
+					if (x < 0 || y < 0) {
+						System.err.println("Negative coordinates: " + x + ", " + y);
+						return;
+					}
+
 					p("G1 X" + d(x) + " Y" + d(y) + (i == 0 ? " F" + nonPrintingMovementSpeed : i == 1 ? " F" + F : ""));
 					if (!ZPositionSet) {
 						p("G1 Z" + d(z) + " F" + Zspeed + " ; set Z position");
@@ -42,8 +67,10 @@ public class GenerateCylinderDual {
 			}
 		}
 
-		p("G1 Z" + d(H + 5.0) + " F" + Zspeed + " ; lift Z");
-		p("G1 X" + d(centerX) + " Y" + d(centerY) + " F" + nonPrintingMovementSpeed + " ; go to center");
+		p("G1 Z" + d(H + 20.0) + " F" + Zspeed + " ; lift Z");
+		double x = centerX + (secondExtruderOffsetX - firstExtruderOffsetX) / 2;
+		double y = centerY + (secondExtruderOffsetY - firstExtruderOffsetY) / 2;
+		p("G1 X" + d(x) + " Y" + d(y) + " F" + nonPrintingMovementSpeed + " ; go to center");
 		p("M84     ; disable motors");
 	}
 
